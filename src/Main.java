@@ -12,7 +12,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        final String path = "D://Games/savegames";
+        final String path = "D:\\Games\\savegames";
 
         String s = ("D:\\Games\\savegames\\save.dat");
         GameProgress game = new GameProgress(12, 5, 10, 1000);
@@ -24,10 +24,12 @@ public class Main {
         GameProgress game2 = new GameProgress(10, 1, 15, 2500);
         saveGame(game2, s2);
 
-        //List<String> list = Arrays.asList(s, s1, s2);
+        List<String> list = Arrays.asList(s, s1, s2);
+
+
         String z = ("D:\\Games\\savegames\\zip.zip");
 
-        zipFiles(z);
+        zipFiles(z, list);
         removeNonZip(path);
     }
 
@@ -43,37 +45,19 @@ public class Main {
             System.out.println(ex.getMessage());
         }
 
-
-//        GameProgress gameRead = null;
-//
-//        try (FileInputStream fis = new FileInputStream(s);
-//             ObjectInputStream ois = new ObjectInputStream(fis)) {
-//
-//            gameRead = (GameProgress) ois.readObject();
-//
-//        } catch (Exception ex) {
-//
-//            System.out.println(ex.getMessage());
-//        }
-//        System.out.println(gameRead);
     }
 
-    private static void zipFiles(String z) {
-
-        String s = ("D:\\Games\\savegames\\save.dat");
-        String s1 = ("D:\\Games\\savegames\\save1.dat");
-        String s2 = ("D:\\Games\\savegames\\save2.dat");
-        List<String> list = Arrays.asList(s, s1, s2);
+    private static void zipFiles(String z, List<String> list) {
 
         try (ZipOutputStream zout = new ZipOutputStream(new FileOutputStream(z));
-             //FileInputStream f = new FileInputStream((File) list);
+
         ) {
-            for (String slist : list) {
-                File fileToZip = new File(slist);
+            for (String lists : list ) {
+                File fileToZip = new File(lists);
                 FileInputStream fis = new FileInputStream(fileToZip);
 
 
-                    ZipEntry entry = new ZipEntry(slist);
+                    ZipEntry entry = new ZipEntry(lists);
                     zout.putNextEntry(entry);
                     byte[] buffer = new byte[fis.available()];
                     fis.read(buffer);
