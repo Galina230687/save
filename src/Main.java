@@ -12,6 +12,8 @@ public class Main {
 
     public static void main(String[] args) {
 
+        final String path = "D://Games/savegames";
+
         String s = ("D:\\Games\\savegames\\save.dat");
         GameProgress game = new GameProgress(12, 5, 10, 1000);
         saveGame(game, s);
@@ -26,6 +28,7 @@ public class Main {
         String z = ("D:\\Games\\savegames\\zip.zip");
 
         zipFiles(z);
+        removeNonZip(path);
     }
 
     private static void saveGame(GameProgress game, String s) {
@@ -76,7 +79,7 @@ public class Main {
                     fis.read(buffer);
                     zout.write(buffer);
                     zout.closeEntry();
-                    //zout.close();
+                    fis.close();
                 }
 
         } catch (Exception ex) {
@@ -84,6 +87,12 @@ public class Main {
             System.out.println(ex.getMessage());
 
         }
+    }
+
+    private static void removeNonZip(String path) {
+        Arrays.stream(new File(path).listFiles())
+                .filter(item -> !item.getName().endsWith("zip"))
+                .forEach(File::delete);
     }
 }
 
